@@ -4,7 +4,7 @@ Projeto desenvolvido para a **Global Solution 2025 (1º Semestre)** da FIAP, com
 
 **Tema da Global Solution:** O Futuro do Trabalho.
 
-[cite_start]Nossa solução, "AI-SkillUP", aborda o eixo **"Soluções gamificadas para engajamento e aprendizado corporativo"**[cite: 4466]. É uma Prova de Conceito (POC) de uma plataforma que utiliza Inteligência Artificial para personalizar a jornada de aprendizado, preparando profissionais para as novas demandas do mercado com foco em *upskilling* e *reskilling*.
+Nossa solução, "AI-SkillUP", aborda o eixo **"Soluções gamificadas para engajamento e aprendizado corporativo"**. É uma Prova de Conceito (POC) de uma plataforma que utiliza Inteligência Artificial para personalizar a jornada de aprendizado, preparando profissionais para as novas demandas do mercado com foco em *upskilling* e *reskilling*.
 
 ## 👨‍💻 Equipe
 
@@ -12,7 +12,7 @@ Projeto desenvolvido para a **Global Solution 2025 (1º Semestre)** da FIAP, com
 
 ## 📽️ Vídeo da POC (7 Minutos)
 
-[cite_start]`[INSERIR AQUI O LINK DO YOUTUBE "NÃO LISTADO" DA SUA APRESENTAÇÃO]` [cite: 4520]
+`[INSERIR AQUI O LINK DO YOUTUBE "NÃO LISTADO" DA SUA APRESENTAÇÃO]`
 
 ---
 
@@ -26,36 +26,36 @@ Projeto desenvolvido para a **Global Solution 2025 (1º Semestre)** da FIAP, com
 
 ## 🛠️ Tecnologias Utilizadas (Requisitos da GS)
 
-[cite_start]Este projeto integra conhecimento de todas as disciplinas obrigatórias da Fase 4 [cite: 4474-4481, 4516]:
+Este projeto integra conhecimento de todas as disciplinas obrigatórias da Fase 4 [cite: 14241-14302]:
 
 * **🐍 Python (Cap03 - A Magia da Matemática):**
     * Linguagem principal para o backend (FastAPI), frontend (Streamlit) e scripts de ML (Scikit-learn).
-    * [cite_start]Uso de `Numpy` e `Pandas` para manipulação de dados no placar e no treinamento do modelo [cite: 13917-13921, 15998-16002].
+    * Uso de `Numpy` e `Pandas` para manipulação de dados no placar e no treinamento do modelo [cite: 11487-11494, 4550-4552].
 
 * **🤖 Machine Learning & IA (Cap03 - Scikit-learn & Cap11 - Regressão):**
-    * [cite_start]O script `src/ml/train_difficulty_model.py` simula o treinamento de um modelo de **Regressão Linear** [cite: 12224-12226, 12267-12270] para prever a dificuldade ideal do usuário.
+    * O script `src/ml/train_difficulty_model.py` simula o treinamento de um modelo de **Regressão Linear** [cite: 14980-14984, 7808-7812] para prever a dificuldade ideal do usuário.
     * O modelo é salvo em um arquivo `.joblib` para "produção".
 
 * **📊 Linguagem R (Cap05 - Séries Temporais):**
-    * [cite_start]O script `src/ml/analise_temporal_mock.R` demonstra a análise de uma série temporal mockada de engajamento de usuários, incluindo a **decomposição** da série [cite: 14008, 14022-14026].
+    * O script `src/ml/analise_temporal_mock.R` demonstra a análise de uma série temporal mockada de engajamento de usuários, incluindo a **decomposição** da série [cite: 10600-10602].
 
 * **🗃️ Banco de Dados (Cap06 - Relacionamentos & Cap07 - Do Conceitual ao Físico):**
-    * [cite_start]O arquivo `src/database/models.py` define um **schema relacional normalizado** (3NF) [cite: 7414-7415] usando SQLAlchemy, com tabelas como `T_USER`, `T_QUIZ_ITEM`, `T_QUIZ_OPTION` e `T_USER_ANSWER`.
-    * [cite_start]Isso evita redundâncias e segue as boas práticas de modelagem (atributos atômicos) [cite: 7414-7415].
+    * O arquivo `src/database/models.py` define um **schema relacional normalizado** (3NF) [cite: 7069-7071] usando SQLAlchemy, com tabelas como `T_USER`, `T_QUIZ_ITEM`, `T_QUIZ_OPTION` e `T_USER_ANSWER`.
+    * Isso evita redundâncias e segue as boas práticas de modelagem (atributos atômicos) [cite: 6348-6349].
 
 * **🖥️ Frontend (Cap04 - Streamlit):**
-    * [cite_start]O frontend completo é construído em Streamlit [cite: 14619-14620][cite_start], com uma arquitetura de múltiplas páginas (`app.py` + pasta `pages/`) [cite: 1470-1471].
-    * [cite_start]Utiliza widgets interativos como `st.radio` e `st.button` [cite: 1419-1420] [cite_start]e `st.balloons` [cite: 1851-1852].
+    * O frontend completo é construído em Streamlit [cite: 2013-2014], com uma arquitetura de múltiplas páginas (`app.py` + pasta `pages/`) [cite: 2626-2632].
+    * Utiliza widgets interativos como `st.radio` e `st.button` [cite: 2289-2292] e `st.balloons` [cite: 2390-2392].
 
 * **☁️ Computação em Nuvem:**
     * A arquitetura é desacoplada (frontend + backend).
     * O backend (`src/backend/main.py`) é uma **API RESTful** construída com **FastAPI**, pronta para deploy em qualquer plataforma de nuvem (como Azure App Service).
 
 * **🔒 Cybersecurity (Cap08):**
-    * A API é o ponto central de defesa. [cite_start]O projeto considera a mitigação de riscos como *Accounting Hijacking* (sequestro de conta) [cite: 5855-5856] ao modularizar a lógica e preparar a estrutura de banco de dados (`T_USER`) para autenticação futura.
+    * A API é o ponto central de defesa. O projeto considera a mitigação de riscos como *Accounting Hijacking* (sequestro de conta) [cite: 11325-11326] ao modularizar a lógica e preparar a estrutura de banco de dados (`T_USER`) para autenticação futura.
 
 * **🌱 Formação Social (Cap01, Cap03 - Fase 3):**
-    * [cite_start]O projeto está alinhado aos **Objetivos de Desenvolvimento Sustentável (ODS)** da ONU, especificamente a **ODS 4 (Educação de Qualidade)** e **ODS 8 (Trabalho Decente)** [cite: 1515, 1530-1533].
+    * O projeto está alinhado aos **Objetivos de Desenvolvimento Sustentável (ODS)** da ONU, especificamente a **ODS 4 (Educação de Qualidade)** e **ODS 8 (Trabalho Decente)** [cite: 14304-14308, 14909].
 
 ---
 
@@ -66,7 +66,7 @@ Para executar esta POC, você precisará de **dois terminais** rodando simultane
 ### 1. Pré-requisitos
 
 * Python 3.9+
-* R (Opcional, veja passo 4.3)
+* R (Opcional, veja passo 3.3)
 * Git
 
 ### 2. Clone e Prepare o Ambiente
@@ -83,3 +83,91 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
 # 3. Instale as dependências Python
 pip install -r requirements.txt
+
+```
+
+### 3. Gere os Artefatos (Executar 1 vez)
+Você precisa executar esses scripts uma única vez para gerar os arquivos necessários para o projeto.
+
+```bash
+
+# 3.1. Criar o banco de dados (SQLite)
+# (Isso cria o arquivo 'poc_database.db' na raiz)
+python src/database/models.py
+
+# 3.2. Treinar o modelo (ML)
+# (Isso cria o arquivo 'difficulty_model.joblib' em 'src/ml/')
+python src/ml/train_difficulty_model.py
+
+# 3.3. Gerar o gráfico (R)
+# (Isso cria o 'engagement_timeseries.png' em 'src/ml/')
+#
+# NOTA: Se você não tiver o R instalado, pule este passo e rode o script Python alternativo:
+python src/ml/gerar_grafico_R_mock.py
+# (O script analise_temporal_mock.R está no repositório para entrega,
+# mas o script Python gera o mesmo gráfico .png para conveniência)
+```
+
+### 4. Execute a Aplicação
+**Abra dois terminais separados (ambos com o venv ativo):**
+
+**➡️ Terminal 1: Backend (API)**
+
+```bash
+
+# Navegue até a pasta do backend
+cd src\backend
+
+# Inicie o servidor da API
+python main.py
+(Deixe este terminal rodando. Você verá o Uvicorn rodando em http://127.0.0.1:8000)
+
+```
+
+**➡️ Terminal 2: Frontend (Streamlit)**
+
+```bash
+
+# Navegue até a pasta raiz do projeto (importante!)
+# Se você está em 'src\backend', volte duas pastas:
+cd ..\.. 
+
+# Inicie o aplicativo Streamlit
+streamlit run app.py
+
+```
+
+### 5. Acesse a Aplicação
+
+**Seu navegador abrirá automaticamente no endereço http://localhost:8501.**
+
+```bash
+
+📂 Estrutura do Projeto
+echo-skill-up/
+│
+├── app.py                      # Landing Page principal do Streamlit (Cap04)
+├── poc_database.db             # Banco de dados SQLite (criado no passo 3.1)
+├── requirements.txt            # Dependências do Python
+├── README.md                   # Este arquivo
+│
+├── pages/                      # Pasta de páginas do Streamlit (Cap04)
+│   ├── 1_Quiz_Interativo.py    # Tela do Quiz (Frontend)
+│   └── 2_Placar.py             # Tela do Placar (Frontend)
+│
+└── src/
+    │
+    ├── backend/
+    │   └── main.py             # API Backend (FastAPI) (Python, Cloud)
+    │
+    ├── database/
+    │   └── models.py           # Definição das tabelas (SQLAlchemy) (Banco de Dados)
+    │
+    └── ml/
+        ├── train_difficulty_model.py # Script de treino do modelo (ML, Cap11)
+        ├── difficulty_model.joblib   # Modelo treinado (criado no passo 3.2)
+        │
+        ├── analise_temporal_mock.R   # Script de análise (Linguagem R, Cap05)
+        ├── gerar_grafico_R_mock.py   # Script Python para simular a saída do R
+        └── engagement_timeseries.png # Gráfico da Série Temporal (criado no passo
+```
