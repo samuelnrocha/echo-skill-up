@@ -10,6 +10,14 @@ Nossa solução, "AI-SkillUP", aborda o eixo **"Soluções gamificadas para enga
 
 * **Samuel Nicolas Oliveira Rocha** - RM568552
 
+* **Gabriel Oliveira dos Santos** RM567166
+
+* **Roberson Pedrosa de Oliveira Junior** RM567216
+
+* **Arthur Brutttel Nascimento** RM568484
+
+* **Jonatan Viotti Rodrigues da Silva** RM566787
+
 ## 📽️ Vídeo da POC (7 Minutos)
 
 `[INSERIR AQUI O LINK DO YOUTUBE "NÃO LISTADO" DA SUA APRESENTAÇÃO]`
