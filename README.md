@@ -34,36 +34,36 @@ Nossa solução, "AI-SkillUP", aborda o eixo **"Soluções gamificadas para enga
 
 ## 🛠️ Tecnologias Utilizadas (Requisitos da GS)
 
-Este projeto integra conhecimento de todas as disciplinas obrigatórias da Fase 4 [cite: 14241-14302]:
+Este projeto integra conhecimento de todas as disciplinas obrigatórias da Fase 4:
 
 * **🐍 Python (Cap03 - A Magia da Matemática):**
     * Linguagem principal para o backend (FastAPI), frontend (Streamlit) e scripts de ML (Scikit-learn).
-    * Uso de `Numpy` e `Pandas` para manipulação de dados no placar e no treinamento do modelo [cite: 11487-11494, 4550-4552].
+    * Uso de `Numpy` e `Pandas` para manipulação de dados no placar e no treinamento do modelo.
 
 * **🤖 Machine Learning & IA (Cap03 - Scikit-learn & Cap11 - Regressão):**
-    * O script `src/ml/train_difficulty_model.py` simula o treinamento de um modelo de **Regressão Linear** [cite: 14980-14984, 7808-7812] para prever a dificuldade ideal do usuário.
+    * O script `src/ml/train_difficulty_model.py` simula o treinamento de um modelo de **Regressão Linear** para prever a dificuldade ideal do usuário.
     * O modelo é salvo em um arquivo `.joblib` para "produção".
 
 * **📊 Linguagem R (Cap05 - Séries Temporais):**
-    * O script `src/ml/analise_temporal_mock.R` demonstra a análise de uma série temporal mockada de engajamento de usuários, incluindo a **decomposição** da série [cite: 10600-10602].
+    * O script `src/ml/analise_temporal_mock.R` demonstra a análise de uma série temporal mockada de engajamento de usuários, incluindo a **decomposição** da série.
 
 * **🗃️ Banco de Dados (Cap06 - Relacionamentos & Cap07 - Do Conceitual ao Físico):**
-    * O arquivo `src/database/models.py` define um **schema relacional normalizado** (3NF) [cite: 7069-7071] usando SQLAlchemy, com tabelas como `T_USER`, `T_QUIZ_ITEM`, `T_QUIZ_OPTION` e `T_USER_ANSWER`.
-    * Isso evita redundâncias e segue as boas práticas de modelagem (atributos atômicos) [cite: 6348-6349].
+    * O arquivo `src/database/models.py` define um **schema relacional normalizado** (3NF) usando SQLAlchemy, com tabelas como `T_USER`, `T_QUIZ_ITEM`, `T_QUIZ_OPTION` e `T_USER_ANSWER`.
+    * Isso evita redundâncias e segue as boas práticas de modelagem (atributos atômicos) .
 
 * **🖥️ Frontend (Cap04 - Streamlit):**
-    * O frontend completo é construído em Streamlit [cite: 2013-2014], com uma arquitetura de múltiplas páginas (`app.py` + pasta `pages/`) [cite: 2626-2632].
-    * Utiliza widgets interativos como `st.radio` e `st.button` [cite: 2289-2292] e `st.balloons` [cite: 2390-2392].
+    * O frontend completo é construído em Streamlit , com uma arquitetura de múltiplas páginas (`app.py` + pasta `pages/`).
+    * Utiliza widgets interativos como `st.radio` e `st.button` e `st.balloons` .
 
 * **☁️ Computação em Nuvem:**
     * A arquitetura é desacoplada (frontend + backend).
     * O backend (`src/backend/main.py`) é uma **API RESTful** construída com **FastAPI**, pronta para deploy em qualquer plataforma de nuvem (como Azure App Service).
 
 * **🔒 Cybersecurity (Cap08):**
-    * A API é o ponto central de defesa. O projeto considera a mitigação de riscos como *Accounting Hijacking* (sequestro de conta) [cite: 11325-11326] ao modularizar a lógica e preparar a estrutura de banco de dados (`T_USER`) para autenticação futura.
+    * A API é o ponto central de defesa. O projeto considera a mitigação de riscos como *Accounting Hijacking* (sequestro de conta) ao modularizar a lógica e preparar a estrutura de banco de dados (`T_USER`) para autenticação futura.
 
 * **🌱 Formação Social (Cap01, Cap03 - Fase 3):**
-    * O projeto está alinhado aos **Objetivos de Desenvolvimento Sustentável (ODS)** da ONU, especificamente a **ODS 4 (Educação de Qualidade)** e **ODS 8 (Trabalho Decente)** [cite: 14304-14308, 14909].
+    * O projeto está alinhado aos **Objetivos de Desenvolvimento Sustentável (ODS)** da ONU, especificamente a **ODS 4 (Educação de Qualidade)** e **ODS 8 (Trabalho Decente)**.
 
 ---
 
