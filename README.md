@@ -107,7 +107,11 @@ python src/database/models.py
 # (Isso cria o arquivo 'difficulty_model.joblib' em 'src/ml/')
 python src/ml/train_difficulty_model.py
 
-# 3.3. Gerar o gráfico (R)
+# 3.3. Popular o banco com dados iniciais (Seed)
+# (Isso adiciona quizzes, tópicos, dificuldades e usuário demo)
+python src/backend/seed_data.py
+
+# 3.4. Gerar o gráfico (R)
 # (Isso cria o 'engagement_timeseries.png' em 'src/ml/')
 #
 # NOTA: Se você não tiver o R instalado, pule este passo e rode o script Python alternativo:
@@ -166,7 +170,8 @@ echo-skill-up/
 └── src/
     │
     ├── backend/
-    │   └── main.py             # API Backend (FastAPI) (Python, Cloud)
+    │   ├── main.py             # API Backend (FastAPI) (Python, Cloud)
+    │   └── seed_data.py        # Script para popular banco com dados iniciais
     │
     ├── database/
     │   └── models.py           # Definição das tabelas (SQLAlchemy) (Banco de Dados)
@@ -177,5 +182,5 @@ echo-skill-up/
         │
         ├── analise_temporal_mock.R   # Script de análise (Linguagem R, Cap05)
         ├── gerar_grafico_R_mock.py   # Script Python para simular a saída do R
-        └── engagement_timeseries.png # Gráfico da Série Temporal (criado no passo
+        └── engagement_timeseries.png # Gráfico da Série Temporal (criado no passo 3.4)
 ```

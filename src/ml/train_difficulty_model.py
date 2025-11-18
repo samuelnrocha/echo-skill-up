@@ -36,5 +36,5 @@ rmse = np.sqrt(mean_squared_error(y_test, preds)) # RMSE é uma métrica válida
 print(f"Avaliação (RMSE) do modelo: {rmse:.4f}")
 
 # 5. Salvar o modelo treinado
-joblib.dump(model, 'difficulty_model.joblib')
+joblib.dump(model, 'src/ml/difficulty_model.joblib')
 print("Modelo salvo em 'src/ml/difficulty_model.joblib'")
