@@ -29,6 +29,12 @@ page = render_sidebar()
 # Header
 render_header("⚙️ Administração", "Gerencie usuários, configurações e sistema")
 
+is_admin = st.session_state.current_user.get('role') == 'admin'
+
+if not is_admin:
+    st.warning("⚠️ Apenas administradores podem acessar a página de Administração.")
+    st.stop()
+
 # ==================== TABS ====================
 tab1, tab2, tab3, tab4 = st.tabs(["👥 Usuários", "🔧 Configurações", "📊 Relatórios", "🔐 Segurança"])
 

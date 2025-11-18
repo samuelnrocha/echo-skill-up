@@ -18,5 +18,3 @@ __all__ = [
     'login_page',
     'check_authentication'
 ]
-
-

@@ -6,10 +6,12 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+from datetime import datetime, timedelta
 from src.frontend.components.theme import init_theme, apply_theme
 from src.frontend.components.sidebar import render_sidebar
 from src.frontend.components.header import render_header
 from src.frontend.components.auth import check_authentication
+from src.frontend.utils.api import api_request
 
 # Configuração
 st.set_page_config(
@@ -58,22 +60,39 @@ with col3:
 # ==================== GRÁFICO DE LINHA - EVOLUÇÃO ====================
 st.markdown("### 📊 Evolução do Desempenho")
 
-# Dados mockados
-dates = pd.date_range(start='2025-01-01', periods=30, freq='D')
-evolution_data = pd.DataFrame({
-    'Data': dates,
-    'Pontuação': [100 + i*10 + (i%5)*5 for i in range(30)],
-    'Quizzes': [1 + (i//3) for i in range(30)],
-    'Taxa de Acerto': [70 + (i%10) for i in range(30)]
-})
+# Busca scores do usuário
+scores_response = api_request("GET", "/users/me/scores")
+if scores_response and scores_response.status_code == 200:
+    scores = scores_response.json()
+    
+    if scores:
+        df = pd.DataFrame(scores)
+        df['timestamp'] = pd.to_datetime(df['timestamp'])
+        df = df.sort_values('timestamp')
+        
+        # Agrupa por data
+        df['date'] = df['timestamp'].dt.date
+        daily = df.groupby('date').agg({
+            'score': 'sum',
+            'quiz_id': 'count'
+        }).reset_index()
+        daily.columns = ['Data', 'Pontuação', 'Quizzes']
+        daily['Taxa de Acerto'] = 100  # Placeholder
+        
+        fig = px.line(
+            daily, 
+            x='Data', 
+            y=metric_type if metric_type in daily.columns else 'Pontuação',
+            color_discrete_sequence=['#00D4AA'],
+            markers=True
+        )
+    else:
+        fig = px.line(pd.DataFrame({'Data': [], 'Pontuação': []}), 
+                      x='Data', y='Pontuação', color_discrete_sequence=['#00D4AA'])
+else:
+    fig = px.line(pd.DataFrame({'Data': [], 'Pontuação': []}), 
+                  x='Data', y='Pontuação', color_discrete_sequence=['#00D4AA'])
 
-fig = px.line(
-    evolution_data, 
-    x='Data', 
-    y=metric_type if metric_type in evolution_data.columns else 'Pontuação',
-    color_discrete_sequence=['#00D4AA'],
-    markers=True
-)
 fig.update_layout(
     plot_bgcolor='rgba(0,0,0,0)',
     paper_bgcolor='rgba(0,0,0,0)',

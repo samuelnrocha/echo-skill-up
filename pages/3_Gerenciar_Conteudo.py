@@ -3,12 +3,11 @@ Página de Gerenciamento de Conteúdo
 """
 
 import streamlit as st
-import requests
 from src.frontend.components.theme import init_theme, apply_theme
 from src.frontend.components.sidebar import render_sidebar
 from src.frontend.components.header import render_header
 from src.frontend.components.auth import check_authentication
-
+from src.frontend.utils.api import api_request
 # Configuração
 st.set_page_config(
     page_title="Gerenciar Conteúdo - Eco-Skill Up",
@@ -30,8 +29,12 @@ page = render_sidebar()
 # Header
 render_header("📚 Gerenciar Conteúdo", "Crie e gerencie quizzes, módulos e materiais educacionais")
 
-# URL da API
-API_URL = "http://127.0.0.1:8000"
+# Verifica se é admin
+is_admin = st.session_state.current_user.get('role') == 'admin'
+
+if not is_admin:
+    st.warning("⚠️ Apenas administradores podem gerenciar conteúdo.")
+    st.stop()
 
 # ==================== TABS ====================
 tab1, tab2, tab3 = st.tabs(["➕ Criar Quiz", "📋 Listar Conteúdo", "✏️ Editar Conteúdo"])
@@ -79,17 +82,51 @@ with tab1:
         submitted = st.form_submit_button("💾 Salvar Quiz", type="primary", use_container_width=True)
         
         if submitted:
-            if question and option1 and option2 and option3 and option4:
-                st.success("✅ Quiz criado com sucesso! (Funcionalidade de criação via API será implementada)")
+            if question and option1 and option2:
+                # Busca IDs de tópico e dificuldade
+                topics_response = api_request("GET", "/quizzes", params={"limit": 1})
+                if topics_response and topics_response.status_code == 200:
+                    # Cria opções
+                    options_list = [
+                        {"text": option1, "is_correct": correct_answer == "Opção 1"},
+                        {"text": option2, "is_correct": correct_answer == "Opção 2"}
+                    ]
+                    if option3:
+                        options_list.append({"text": option3, "is_correct": correct_answer == "Opção 3"})
+                    if option4:
+                        options_list.append({"text": option4, "is_correct": correct_answer == "Opção 4"})
+                    
+                    # Mapeia tópico e dificuldade (simplificado - em produção buscar da API)
+                    topic_map = {
+                        "Prompt Engineering": 1, "Python": 2, "IA": 3, "Machine Learning": 4,
+                        "Banco de Dados": 5, "R": 6, "Sustentabilidade": 7, "Economia Verde": 8
+                    }
+                    difficulty_map = {"Fácil": 1, "Médio": 2, "Difícil": 3}
+                    
+                    quiz_data = {
+                        "question_text": question,
+                        "id_topic": topic_map.get(topic, 1),
+                        "id_difficulty": difficulty_map.get(difficulty, 1),
+                        "options": options_list
+                    }
+                    
+                    create_response = api_request("POST", "/quizzes", json=quiz_data)
+                    if create_response and create_response.status_code == 200:
+                        st.success("✅ Quiz criado com sucesso!")
+                        st.rerun()
+                    else:
+                        st.error("❌ Erro ao criar quiz. Verifique os dados.")
+                else:
+                    st.error("❌ Erro ao buscar informações necessárias.")
             else:
-                st.error("⚠️ Por favor, preencha todos os campos.")
+                st.error("⚠️ Por favor, preencha pelo menos a pergunta e 2 opções.")
 
 # ==================== TAB 2: LISTAR CONTEÚDO ====================
 with tab2:
     st.markdown("### 📋 Conteúdo Disponível")
     
     # Filtros
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     with col1:
         filter_topic = st.selectbox(
             "Filtrar por Tópico",
@@ -101,51 +138,68 @@ with tab2:
             "Filtrar por Dificuldade",
             ["Todas", "Fácil", "Médio", "Difícil"]
         )
-    with col3:
-        search = st.text_input("🔍 Buscar", placeholder="Digite para buscar...")
     
-    # Lista de quizzes (mockado)
-    quizzes = [
-        {"id": 1, "question": "O que é um prompt em sistemas de IA?", "topic": "Prompt Engineering", "difficulty": "Médio", "status": "Ativo"},
-        {"id": 2, "question": "Qual é a forma correta de criar uma lista em Python?", "topic": "Python", "difficulty": "Fácil", "status": "Ativo"},
-        {"id": 3, "question": "O que significa 'Economia Verde'?", "topic": "Sustentabilidade", "difficulty": "Fácil", "status": "Ativo"},
-        {"id": 4, "question": "Qual é a diferença entre regressão e classificação?", "topic": "Machine Learning", "difficulty": "Difícil", "status": "Ativo"},
-    ]
-    
-    # Aplica filtros
-    filtered_quizzes = quizzes
+    # Busca quizzes da API
+    quiz_params = {}
     if filter_topic != "Todos":
-        filtered_quizzes = [q for q in filtered_quizzes if q['topic'] == filter_topic]
+        quiz_params["topic"] = filter_topic
     if filter_difficulty != "Todas":
-        filtered_quizzes = [q for q in filtered_quizzes if q['difficulty'] == filter_difficulty]
-    if search:
-        filtered_quizzes = [q for q in filtered_quizzes if search.lower() in q['question'].lower()]
+        quiz_params["difficulty"] = filter_difficulty
+    
+    quizzes_response = api_request("GET", "/quizzes", params=quiz_params)
+    quizzes = quizzes_response.json() if quizzes_response and quizzes_response.status_code == 200 else []
     
     # Exibe quizzes
-    for quiz in filtered_quizzes:
-        with st.expander(f"📝 {quiz['question'][:60]}..."):
-            col1, col2, col3 = st.columns([3, 1, 1])
-            with col1:
-                st.write(f"**Pergunta completa:** {quiz['question']}")
-            with col2:
-                st.write(f"**Tópico:** {quiz['topic']}")
-                st.write(f"**Dificuldade:** {quiz['difficulty']}")
-            with col3:
-                st.write(f"**Status:** {quiz['status']}")
-                if st.button("✏️ Editar", key=f"edit_{quiz['id']}"):
-                    st.info("Funcionalidade de edição será implementada")
+    if quizzes:
+        for quiz in quizzes:
+            with st.expander(f"📝 {quiz.get('question_text', '')[:60]}..."):
+                col1, col2, col3 = st.columns([3, 1, 1])
+                with col1:
+                    st.write(f"**Pergunta completa:** {quiz.get('question_text', '')}")
+                with col2:
+                    st.write(f"**Tópico:** {quiz.get('topic', 'N/A')}")
+                    st.write(f"**Dificuldade:** {quiz.get('difficulty', 'N/A')}")
+                with col3:
+                    st.write(f"**ID:** {quiz.get('id_quiz', 'N/A')}")
+                    quiz_id = quiz.get('id_quiz')
+                    if st.button("🗑️ Deletar", key=f"delete_{quiz_id}"):
+                        delete_response = api_request("DELETE", f"/quizzes/{quiz_id}")
+                        if delete_response and delete_response.status_code == 200:
+                            st.success("✅ Quiz deletado com sucesso!")
+                            st.rerun()
+                        else:
+                            st.error("❌ Erro ao deletar quiz.")
+    else:
+        st.info("Nenhum quiz encontrado com os filtros selecionados.")
 
 # ==================== TAB 3: EDITAR CONTEÚDO ====================
 with tab3:
     st.markdown("### ✏️ Editar Conteúdo Existente")
     
-    quiz_to_edit = st.selectbox(
-        "Selecione o quiz para editar",
-        ["Selecione um quiz..."] + [f"Quiz {i}: {q['question'][:50]}..." for i, q in enumerate(quizzes, 1)]
-    )
+    # Busca todos os quizzes
+    all_quizzes_response = api_request("GET", "/quizzes")
+    all_quizzes = all_quizzes_response.json() if all_quizzes_response and all_quizzes_response.status_code == 200 else []
     
-    if quiz_to_edit != "Selecione um quiz...":
-        st.info("📝 Formulário de edição será carregado aqui. (Funcionalidade será implementada)")
+    if all_quizzes:
+        quiz_options = {f"ID {q.get('id_quiz')}: {q.get('question_text', '')[:50]}...": q.get('id_quiz') 
+                       for q in all_quizzes}
+        selected_quiz_name = st.selectbox(
+            "Selecione o quiz para editar",
+            options=["Selecione um quiz..."] + list(quiz_options.keys())
+        )
+        
+        if selected_quiz_name != "Selecione um quiz...":
+            quiz_id = quiz_options[selected_quiz_name]
+            quiz_response = api_request("GET", f"/quizzes/{quiz_id}")
+            
+            if quiz_response and quiz_response.status_code == 200:
+                quiz_data = quiz_response.json()
+                st.info("📝 Funcionalidade de edição completa será implementada em breve. Use a API diretamente para editar quizzes.")
+                st.json(quiz_data)
+            else:
+                st.error("Não foi possível carregar os dados do quiz.")
+    else:
+        st.info("Nenhum quiz disponível para editar.")
 
 # ==================== ESTATÍSTICAS DE CONTEÚDO ====================
 st.markdown("---")
